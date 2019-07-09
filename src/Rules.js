@@ -20,14 +20,15 @@ class Rule {
   }
 
   freq(dice) {
-    // frequencies of dice values
+    // this will return an array that says, for example, there were three of a number, 1 of another number, and 1 of another number 
+    // if we want to see if we have a 'three of a kind', this will check if 3 is present in the returned array
     const freqs = new Map();
     for (let d of dice) freqs.set(d, (freqs.get(d) || 0) + 1);
     return Array.from(freqs.values());
   }
 
   count(dice, val) {
-    // # times val appears in dice
+    // this takes an array of dice, and tells us how many times the value appears in the array
     return dice.filter(d => d === val).length;
   }
 }
@@ -38,6 +39,7 @@ class Rule {
  */
 
 class TotalOneNumber extends Rule {
+  // this will sum all of the specified number (all the 3s)
   evalRoll = dice => {
     return this.val * this.count(dice, this.val);
   };
@@ -109,7 +111,7 @@ const largeStraight = new LargeStraight({ score: 40 });
 // yahtzee scores as 50
 const yahtzee = new Yahtzee({ score: 50 });
 
-// for chance, can view as some of all dice, requiring at least 0 of a kind
+// for chance, can view as sum of all dice, requiring at least 0 of a kind
 const chance = new SumDistro({ count: 0 });
 
 export {
