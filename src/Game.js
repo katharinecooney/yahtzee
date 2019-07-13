@@ -34,6 +34,7 @@ class Game extends Component {
     this.doScore = this.doScore.bind(this);
     this.toggleLocked = this.toggleLocked.bind(this);
     this.animateRoll = this.animateRoll.bind(this);
+    this.displayRollInfo = this.displayRollInfo.bind(this);
   }
 
   componentDidMount(){
@@ -84,7 +85,18 @@ class Game extends Component {
     this.animateRoll();
   }
 
+  displayRollInfo(){
+    const messages = [
+      "0 Rolls Left",
+      "1 Roll Left",
+      "2 Rolls Left",
+      "Starting Hand"
+    ]
+    return messages[this.state.rollsLeft];
+  }
+
   render() {
+    const {dice, locked, rollsLeft, isRolling, scores} = this.state;
     return (
       <div className='Game'>
         <header className='Game-header'>
@@ -92,26 +104,28 @@ class Game extends Component {
 
           <section className='Game-dice-section'>
             <Dice
-              dice={this.state.dice}
-              locked={this.state.locked}
+              dice={dice}
+              locked={locked}
               handleClick={this.toggleLocked}
-              disabled={this.state.rollsLeft === 0}
-              isRolling={this.state.isRolling}
+              disabled={rollsLeft === 0}
+              isRolling={isRolling}
             />
             <div className='Game-button-wrapper'>
               <button
                 className='Game-reroll'
                 disabled={
-                  this.state.locked.every(x => x) || this.state.rollsLeft === 0
+                  locked.every(x => x) || 
+                  rollsLeft === 0 ||
+                  isRolling
                   }
                 onClick={this.animateRoll}
               >
-                {this.state.rollsLeft} Rerolls Left
+              {isRolling ? 'Rolling...' : this.displayRollInfo()}
               </button>
             </div>
           </section>
         </header>
-        <ScoreTable doScore={this.doScore} scores={this.state.scores} />
+        <ScoreTable doScore={this.doScore} scores={scores} />
       </div>
     );
   }
