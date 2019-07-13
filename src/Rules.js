@@ -124,7 +124,7 @@ const largeStraight = new LargeStraight({ score: 40, description: "40 points for
 const yahtzee = new Yahtzee({ score: 50, description: "50 points for yahtzee" });
 
 // for chance, can view as sum of all dice, requiring at least 0 of a kind
-const chance = new SumDistro({ count: 0 });
+const chance = new SumDistro({ count: 0, description: 'Sum of all dice' });
 
 export {
   ones,
