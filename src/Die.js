@@ -3,7 +3,8 @@ import "./Die.css";
 
 class Die extends Component {
   static defaultProps = {
-    numberWords:   ["one", "two", "three", "four", "five", "six"]
+    numberWords:   ["one", "two", "three", "four", "five", "six"],
+    val: 1
   }
 
   constructor(props){
@@ -16,11 +17,14 @@ class Die extends Component {
   }
 
   render() {
-    const {numberWords, locked, val, disabled} = this.props;
+    const {numberWords, locked, val, disabled, isRolling} = this.props;
     let classes = `Die fas fa-dice-${numberWords[val - 1]}`
 
     if(locked) {
       classes += " Die-locked"
+    }
+    if(isRolling){
+      classes += " Die-rolling"
     }
     return (
       <i
